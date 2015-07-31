@@ -1,0 +1,29 @@
+{
+    "name": "smartsupp/chat-code-generator",
+    "description": "This simple PHP class allows you to easily generate Smartsupp.com JS chat code.",
+    "type": "library",
+    "keywords": [
+        "chat"
+    ],
+    "homepage": "https://www.smartsupp.com/",
+    "license": "",
+    "authors": [
+        {
+            "name": "Marek Gach",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/smartsupp/chat-code-generator/issues",
+        "wiki": "https://github.com/smartsupp/chat-code-generator/wiki",
+        "source": "https://github.com/smartsupp/chat-code-generator"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "require": {
+        "php": ">=5.3.*"
+    }
+}
