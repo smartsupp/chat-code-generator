@@ -1,0 +1,7 @@
+<?
+namespace Smartsupp;
+
+class ChatGenerator
+{
+
+}
