@@ -205,12 +205,14 @@ class ChatGenerator
      * @param boolean|false $rating_comment
      * @throws \Exception when parameter value is incorrect
      */
-    public function enableRating($rating_type = 'simple', boolean $rating_comment = false)
+    public function enableRating($rating_type = 'simple', $rating_comment = false)
     {
         if (!in_array($rating_type, $this->allowed_rating_types)) {
             throw new \Exception("Rating type $rating_type is not allowed value. You can use only one of values: " .
                 implode(', ', $this->allowed_rating_types) . ".");
         }
+
+        $rating_comment = (bool) $rating_comment;
 
         $this->rating_enabled = true;
         $this->rating_type = $rating_type;
@@ -255,7 +257,7 @@ class ChatGenerator
      * @param int $offset_y Offset from top.
      * @throws \Exception When params are not correct.
      */
-    public function setBoxPosition($align_x = 'right', $align_y = 'bottom', int $offset_x = 10, int $offset_y = 100)
+    public function setBoxPosition($align_x = 'right', $align_y = 'bottom', $offset_x = 10, $offset_y = 100)
     {
         if (!in_array($align_x, $this->allowed_align_x)) {
             throw new \Exception("AllignX value $align_x is not allowed value. You can use only one of values: " .
@@ -313,5 +315,31 @@ class ChatGenerator
     public function hideWidget()
     {
         $this->hide_widget = true;
+    }
+
+    /**
+     * Function for ultimate javascript variable value escaping. Can handle any string. Is decoding any non-alphanumeric
+     * character as hex value. This will allow to pass the value of variable without any modifications.
+     *
+     * @param $str string String to encode.
+     * @return string Encoded string.
+     */
+    public function javascriptEscape($str)
+    {
+        $new_str = '';
+
+        for ($i = 0; $i < strlen($str); $i++) {
+            // obtain single character
+            $char = substr($str, $i, 1);
+
+            // if is alphanumeric put directly into string
+            if (ctype_alnum($char)) {
+                $new_str .= $char;
+            } else { // else encode as hex
+                $new_str .= '\\x' . dechex(ord($char));
+            }
+        }
+
+        return $new_str;
     }
 }
