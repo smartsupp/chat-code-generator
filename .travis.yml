@@ -12,6 +12,5 @@ script:
   - vendor/bin/phpunit --configuration phpunit.xml --coverage-text
 
 after_script:
-  - php vendor/bin/coveralls
-  # or enable logging
+  # enable logging
   - php vendor/bin/coveralls -v
