@@ -6,4 +6,12 @@ php:
   - 5.6
 
 before_script: composer install
-script: vendor/bin/phpunit --configuration phpunit.xml --coverage-text
+script:
+  - vendor/bin/phpcs src/ -p --standard=PSR2 --report=summary
+  - mkdir -p build/logs
+  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text
+
+after_script:
+  - php vendor/bin/coveralls
+  # or enable logging
+  - php vendor/bin/coveralls -v
