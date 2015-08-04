@@ -265,7 +265,7 @@ class ChatGenerator
         }
 
         if (!in_array($align_y, $this->allowed_align_y)) {
-            throw new \Exception("AllignX value $align_y is not allowed value. You can use only one of values: " .
+            throw new \Exception("AllignY value $align_y is not allowed value. You can use only one of values: " .
                 implode(', ', $this->allowed_align_y) . ".");
         }
 
@@ -284,7 +284,7 @@ class ChatGenerator
     public function setWidget($widget = 'widget')
     {
         if (!in_array($widget, $this->allowed_widget)) {
-            throw new \Exception("AllignX value $widget is not allowed value. You can use only one of values: " .
+            throw new \Exception("Widget value $widget is not allowed value. You can use only one of values: " .
                 implode(', ', $this->allowed_widget) . ".");
         }
 
