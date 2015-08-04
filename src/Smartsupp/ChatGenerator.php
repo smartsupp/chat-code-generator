@@ -240,7 +240,7 @@ class ChatGenerator
      * @param $label Parameter label.
      * @param $value Parameter value.
      */
-    public function setUserExtraInformation($id, $label, $value)
+    public function addUserExtraInformation($id, $label, $value)
     {
         $variable = array('id' => $id, 'label' => $label, 'value' => $value);
 
