@@ -141,12 +141,12 @@ class ChatGenerator
      * Set chat language. Also is checking if language is one of allowed values.
      *
      * @param string $language
-     * @throws Exception when parameter value is incorrect
+     * @throws \Exception when parameter value is incorrect
      */
     public function setLanguage($language)
     {
         if (!in_array($language, $this->allowed_languages)) {
-            throw new Exception("Language $language is not allowed value. You can use only one of values: " .
+            throw new \Exception("Language $language is not allowed value. You can use only one of values: " .
                 implode(', ', $this->allowed_languages) . ".");
         }
 
@@ -203,12 +203,12 @@ class ChatGenerator
      *
      * @param string $rating_type
      * @param boolean|false $rating_comment
-     * @throws Exception when parameter value is incorrect
+     * @throws \Exception when parameter value is incorrect
      */
     public function enableRating($rating_type = 'simple', boolean $rating_comment = false)
     {
         if (!in_array($rating_type, $this->allowed_rating_types)) {
-            throw new Exception("Rating type $rating_type is not allowed value. You can use only one of values: " .
+            throw new \Exception("Rating type $rating_type is not allowed value. You can use only one of values: " .
                 implode(', ', $this->allowed_rating_types) . ".");
         }
 
@@ -253,17 +253,17 @@ class ChatGenerator
      * @param string $align_y Align to bottom or side.
      * @param int $offset_x Offset from left or right.
      * @param int $offset_y Offset from top.
-     * @throws Exception When params are not correct.
+     * @throws \Exception When params are not correct.
      */
     public function setBoxPosition($align_x = 'right', $align_y = 'bottom', int $offset_x = 10, int $offset_y = 100)
     {
         if (!in_array($align_x, $this->allowed_align_x)) {
-            throw new Exception("AllignX value $align_x is not allowed value. You can use only one of values: " .
+            throw new \Exception("AllignX value $align_x is not allowed value. You can use only one of values: " .
                 implode(', ', $this->allowed_align_x) . ".");
         }
 
         if (!in_array($align_y, $this->allowed_align_y)) {
-            throw new Exception("AllignX value $align_y is not allowed value. You can use only one of values: " .
+            throw new \Exception("AllignX value $align_y is not allowed value. You can use only one of values: " .
                 implode(', ', $this->allowed_align_y) . ".");
         }
 
@@ -277,12 +277,12 @@ class ChatGenerator
      * We supports two chat-box layouts, widget and button. By default is activated layout widget.
      *
      * @param string $widget Parameter value.
-     * @throws Exception when parameter value is incorrect
+     * @throws \Exception when parameter value is incorrect
      */
     public function setWidget($widget = 'widget')
     {
         if (!in_array($widget, $this->allowed_widget)) {
-            throw new Exception("AllignX value $widget is not allowed value. You can use only one of values: " .
+            throw new \Exception("AllignX value $widget is not allowed value. You can use only one of values: " .
                 implode(', ', $this->allowed_widget) . ".");
         }
 
