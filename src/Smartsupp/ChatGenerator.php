@@ -137,6 +137,11 @@ class ChatGenerator
      */
     protected $hide_widget = false;
 
+    public function __construct($key = null)
+    {
+        $this->key = $key;
+    }
+
     /**
      * Set chat language. Also is checking if language is one of allowed values.
      *
@@ -341,5 +346,114 @@ class ChatGenerator
         }
 
         return $new_str;
+    }
+
+    /**
+     * Will assemble chat JS code. Class property with name key need to be set before rendering.
+     *
+     * @param bool|false $print_out Force to echo JS chat code instead of returning it.
+     * @return string
+     * @throws \Exception Will reach exception when key param is not set.
+     */
+    public function render($print_out = false)
+    {
+        if (empty($this->key)) {
+            throw new \Exception("At least KEY param must be set!");
+        }
+
+        $params = array();
+
+        // set cookie domain if not blank
+        if ($this->cookie_domain) {
+            $params[] = "_smartsupp.cookieDomain = '%cookie_domain%';";
+        }
+
+        // If is set to false, turn off. Default value is true.
+        if (!$this->send_email_transcript) {
+            $params[] = "_smartsupp.sendEmailTanscript = false;";
+        }
+
+        if ($this->rating_enabled) {
+            $params[] = "_smartsupp.ratingEnabled = true;  // by default false";
+            $params[] = "_smartsupp.ratingType = '" . $this->rating_type . "'; // by default 'simple'";
+            $params[] = "_smartsupp.ratingComment = " . ($this->rating_comment? 'true':'false') . ";  // default false";
+        }
+
+        $params[] = "_smartsupp.alignX = '" . $this->align_x . "'; // or 'left'";
+        $params[] = "_smartsupp.alignY = '" . $this->align_y . "';  // by default 'bottom'";
+        $params[] = "_smartsupp.offsetX = " . (int) $this->offset_x . ";    // offset from left or right, default 10";
+        $params[] = "_smartsupp.offsetY = " . (int) $this->offset_y . ";    // offset from top, default 100";
+        $params[] = "_smartsupp.widget = '" . $this->widget . "'; // by default 'widget'";
+
+        // set detailed visitor's info
+        // basic info
+        if ($this->email) {
+            $params[] = "smartsupp('email', '" . self::javascriptEscape($this->email) . "');";
+        }
+
+        if ($this->name) {
+            $params[] = "smartsupp('name', '" . self::javascriptEscape($this->name) . "');";
+        }
+
+
+        // extra info
+        if ($this->variables) {
+            $options = array();
+
+            foreach ($this->variables as $key => $value) {
+                $options[] = self::javascriptEscape($value['id']) .": {label: '" .
+                    self::javascriptEscape($value['label']) . "', value: '" . self::javascriptEscape($value['value']) .
+                    "'}";
+            }
+
+            $params[] = "smartsupp('variables', {" .
+                implode(", ", $options) .
+            "});";
+        }
+
+
+        // set GA key and additional GA params
+        if ($this->ga_key) {
+            $params[] = "_smartsupp.gaKey = '%ga_key%';";
+
+            if (!empty($this->ga_options)) {
+                $options = array();
+
+                foreach ($this->ga_options as $key => $value) {
+                    $options[] = "'" . self::javascriptEscape($key) . "': '" . self::javascriptEscape($value) . "'";
+                }
+
+                $params[] = "_smartsupp.gaOptions = {" . implode(", ", $options) . "};";
+            }
+        }
+
+        // hide widget if needed
+        if ($this->hide_widget) {
+            $params[] = "_smartsupp.hideWidget = true;";
+        }
+
+        // create basic code and append params
+        $code = "<script type=\"text/javascript\">
+            var _smartsupp = _smartsupp || {};
+            _smartsupp.key = '%key%';\n" .
+            implode("\n", $params) . "\n" .
+            "window.smartsupp||(function(d) {
+                var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+                s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+                c.type='text/javascript';c.charset='utf-8';c.async=true;
+                c.src='//www.smartsuppchat.com/loader.js';s.parentNode.insertBefore(c,s);
+            })(document);
+            </script>";
+
+        $code = str_replace('%key%', self::javascriptEscape($this->key), $code);
+        $code = str_replace('%cookie_domain%', self::javascriptEscape($this->cookie_domain), $code);
+        $code = str_replace('%ga_key%', self::javascriptEscape($this->ga_key), $code);
+
+
+        if ($print_out) {
+            echo $code;
+        } else {
+            return $code;
+        }
     }
 }
