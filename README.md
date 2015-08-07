@@ -26,5 +26,5 @@ Here is an example on how to use it:
   $chat->addUserExtraInformation('orderTotal', 'Total orders', 150);
   $chat->addUserExtraInformation('lastOrder', 'Last ordered', '2015-07-09');
   $chat->setGoogleAnalytics('UA-123456');
-  $data = $this->chat->render();
+  $data = $chat->render();
 ```
