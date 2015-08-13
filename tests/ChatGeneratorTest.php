@@ -256,9 +256,6 @@ _smartsupp.alignY = 'side';  // by default 'bottom'
 _smartsupp.offsetX = 20;    // offset from left or right, default 10
 _smartsupp.offsetY = 120;    // offset from top, default 100
 _smartsupp.widget = 'button'; // by default 'widget'
-smartsupp('email', 'johny\\x40depp\\x2ecom');
-smartsupp('name', 'Johny\\x20Depp');
-smartsupp('variables', {orderTotal: {label: 'Total\\x20orders', value: '150'}, lastOrder: {label: 'Last\\x20ordered', value: '2015\\x2d07\\x2d09'}});
 _smartsupp.gaKey = 'UA\\x2d123456';
 _smartsupp.gaOptions = {'cookieDomain': '\\x2efoo\\x2ebar'};
 _smartsupp.hideWidget = true;
@@ -267,7 +264,9 @@ window.smartsupp||(function(d) {
                 s=d.getElementsByTagName('script')[0];c=d.createElement('script');
                 c.type='text/javascript';c.charset='utf-8';c.async=true;
                 c.src='//www.smartsuppchat.com/loader.js';s.parentNode.insertBefore(c,s);
-            })(document);
+            })(document);smartsupp('email', 'johny\\x40depp\\x2ecom');
+smartsupp('name', 'Johny\\x20Depp');
+smartsupp('variables', {orderTotal: {label: 'Total\\x20orders', value: '150'}, lastOrder: {label: 'Last\\x20ordered', value: '2015\\x2d07\\x2d09'}});
             </script>";
 
         $ret = $this->chat->render();

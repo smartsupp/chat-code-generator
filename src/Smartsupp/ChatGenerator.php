@@ -362,6 +362,7 @@ class ChatGenerator
         }
 
         $params = array();
+        $params2 = array();
 
         // set cookie domain if not blank
         if ($this->cookie_domain) {
@@ -388,11 +389,11 @@ class ChatGenerator
         // set detailed visitor's info
         // basic info
         if ($this->email) {
-            $params[] = "smartsupp('email', '" . self::javascriptEscape($this->email) . "');";
+            $params2[] = "smartsupp('email', '" . self::javascriptEscape($this->email) . "');";
         }
 
         if ($this->name) {
-            $params[] = "smartsupp('name', '" . self::javascriptEscape($this->name) . "');";
+            $params2[] = "smartsupp('name', '" . self::javascriptEscape($this->name) . "');";
         }
 
 
@@ -406,7 +407,7 @@ class ChatGenerator
                     "'}";
             }
 
-            $params[] = "smartsupp('variables', {" .
+            $params2[] = "smartsupp('variables', {" .
                 implode(", ", $options) .
             "});";
         }
@@ -442,7 +443,8 @@ class ChatGenerator
                 s=d.getElementsByTagName('script')[0];c=d.createElement('script');
                 c.type='text/javascript';c.charset='utf-8';c.async=true;
                 c.src='//www.smartsuppchat.com/loader.js';s.parentNode.insertBefore(c,s);
-            })(document);
+            })(document);"
+            . implode("\n", $params2) . "
             </script>";
 
         $code = str_replace('%key%', self::javascriptEscape($this->key), $code);
