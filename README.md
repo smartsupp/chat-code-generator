@@ -22,9 +22,10 @@ Here is an example on how to use it:
   $chat->disableSendEmailTranscript();
   $chat->enableRating('advanced', true);
   $chat->setBoxPosition('left', 'side', 20, 120);
-  $chat->setUserBasicInformation('Johny Depp', 'johny@depp.com');
-  $chat->addUserExtraInformation('orderTotal', 'Total orders', 150);
-  $chat->addUserExtraInformation('lastOrder', 'Last ordered', '2015-07-09');
+  $chat->setName('Johny Depp');
+  $chat->setEmail('johny@depp.com');
+  $chat->setVariable('orderTotal', 'Total orders', 150);
+  $chat->setVariable('lastOrder', 'Last ordered', '2015-07-09');
   $chat->setGoogleAnalytics('UA-123456');
   $data = $chat->render();
 ```
