@@ -94,27 +94,27 @@ class ChatGenerator
     /**
      * @var string Chat X align.
      */
-    protected $align_x = 'right';
+    protected $align_x = null;
 
     /**
      * @var string Chat Y align.
      */
-    protected $align_y = 'bottom';
+    protected $align_y = null;
 
     /**
      * @var int Chat X offset.
      */
-    protected $offset_x = 10;
+    protected $offset_x = null;
 
     /**
      * @var int Chat Y offset.
      */
-    protected $offset_y = 100;
+    protected $offset_y = null;
 
     /**
      * @var string Widget type.
      */
-    protected $widget = 'widget';
+    protected $widget = null;
 
     /**
      * @var null|string Google analytics key value.
@@ -377,11 +377,16 @@ class ChatGenerator
             $params[] = "_smartsupp.ratingComment = " . ($this->rating_comment? 'true':'false') . ";  // default false";
         }
 
-        $params[] = "_smartsupp.alignX = '" . $this->align_x . "'; // or 'left'";
-        $params[] = "_smartsupp.alignY = '" . $this->align_y . "';  // by default 'bottom'";
-        $params[] = "_smartsupp.offsetX = " . (int) $this->offset_x . ";    // offset from left or right, default 10";
-        $params[] = "_smartsupp.offsetY = " . (int) $this->offset_y . ";    // offset from top, default 100";
-        $params[] = "_smartsupp.widget = '" . $this->widget . "'; // by default 'widget'";
+        if ($this->align_x && $this->align_y && $this->widget) {
+            $params[] = "_smartsupp.alignX = '" . $this->align_x . "'; // or 'left'";
+            $params[] = "_smartsupp.alignY = '" . $this->align_y . "';  // by default 'bottom'";
+            $params[] = "_smartsupp.widget = '" . $this->widget . "'; // by default 'widget'";
+        }
+
+        if ($this->offset_x && $this->offset_y) {
+            $params[] = "_smartsupp.offsetX = " . (int)$this->offset_x . ";    // offset from left / right, default 10";
+            $params[] = "_smartsupp.offsetY = " . (int)$this->offset_y . ";    // offset from top, default 100";
+        }
 
         // set detailed visitor's info
         // basic info

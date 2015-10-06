@@ -196,11 +196,7 @@ class ChatGeneratorTest extends \PHPUnit_Framework_TestCase
         $expected = "<script type=\"text/javascript\">
             var _smartsupp = _smartsupp || {};
             _smartsupp.key = 'XYZ123456';
-_smartsupp.alignX = 'right'; // or 'left'
-_smartsupp.alignY = 'bottom';  // by default 'bottom'
-_smartsupp.offsetX = 10;    // offset from left or right, default 10
-_smartsupp.offsetY = 100;    // offset from top, default 100
-_smartsupp.widget = 'widget'; // by default 'widget'
+
 window.smartsupp||(function(d) {
                 var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
                 s=d.getElementsByTagName('script')[0];c=d.createElement('script');
@@ -246,9 +242,9 @@ _smartsupp.ratingType = 'advanced'; // by default 'simple'
 _smartsupp.ratingComment = true;  // default false
 _smartsupp.alignX = 'left'; // or 'left'
 _smartsupp.alignY = 'side';  // by default 'bottom'
-_smartsupp.offsetX = 20;    // offset from left or right, default 10
-_smartsupp.offsetY = 120;    // offset from top, default 100
 _smartsupp.widget = 'button'; // by default 'widget'
+_smartsupp.offsetX = 20;    // offset from left / right, default 10
+_smartsupp.offsetY = 120;    // offset from top, default 100
 _smartsupp.gaKey = 'UA\\x2d123456';
 _smartsupp.gaOptions = {'cookieDomain': '\\x2efoo\\x2ebar'};
 _smartsupp.hideWidget = true;
