@@ -320,41 +320,7 @@ class ChatGenerator
     }
 
     /**
-     * Function will return code for UTF-8 character like native PHP ord(). In comparison to ord() is able to handle
-     * UTF-8.
-     *
-     * @param $character single utf-8 character
-     * @return int
-     */
-    private function ordUTF8($character)
-    {
-        $first_byte = ord($character[0]);
-
-        if (($first_byte & 0x80) == 0) {
-            // Single-byte form: 0xxxxxxxx.
-            return $first_byte;
-        }
-        if (($first_byte & 0xe0) == 0xc0) {
-            // Two-byte form: 110xxxxx 10xxxxxx.
-            return (($first_byte & 0x1f) << 6) + (ord($character[1]) & 0x3f);
-        }
-        if (($first_byte & 0xf0) == 0xe0) {
-            // Three-byte form: 1110xxxx 10xxxxxx 10xxxxxx.
-            return (($first_byte & 0x0f) << 12) + ((ord($character[1]) & 0x3f) << 6) + (ord($character[2]) & 0x3f);
-        }
-        if (($first_byte & 0xf8) == 0xf0) {
-            // Four-byte form: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx.
-            return (($first_byte & 0x07) << 18) + ((ord($character[1]) & 0x3f) << 12)
-                    + ((ord($character[2]) & 0x3f) << 6) + (ord($character[3]) & 0x3f);
-        }
-
-        // Other forms are not legal.
-        return -1;
-    }
-
-    /**
-     * Function for ultimate javascript variable value escaping. Can handle any string. Is decoding any non-alphanumeric
-     * character as hex value. This will allow to pass the value of variable without any modifications.
+     * Function for javascript variable value escaping.
      *
      * @param $str string String to encode.
      * @return string Encoded string.
@@ -363,15 +329,15 @@ class ChatGenerator
     {
         $new_str = '';
 
-        for ($i = 0; $i < strlen($str); $i++) {
+        for ($i = 0; $i < mb_strlen($str); $i++) {
             // obtain single character
-            $char = substr($str, $i, 1);
+            $char = mb_substr($str, $i, 1);
 
             // if is alphanumeric put directly into string
-            if (ctype_alnum($char)) {
+            if (!in_array($char, array("'"))) {
                 $new_str .= $char;
             } else { // else encode as hex
-                $new_str .= '\\x' . dechex($this->ordUTF8($char));
+                $new_str .= '\\x' . bin2hex($char);
             }
         }
 

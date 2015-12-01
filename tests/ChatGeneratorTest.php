@@ -26,15 +26,14 @@ class ChatGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $ret = $this->chat->javascriptEscape("<script>alert('xss')</script>");
 
-        $this->assertEquals('\x3cscript\x3ealert\x28\x27xss\x27\x29\x3c\x2fscript\x3e', $ret);
+        $this->assertEquals('<script>alert(\x27xss\x27)</script>', $ret);
     }
 
     public function test_javascriptEscape_someSpecialChars()
     {
         $ret = $this->chat->javascriptEscape("\"'*!@#$%^&*()_+}{:?><.,/`~");
 
-        $this->assertEquals('\x22\x27\x2a\x21\x40\x23\x24\x25\x5e\x26\x2a\x28\x29\x5f\x2b\x7d\x7b\x3a\x3f\x3e\x3c\x2e' .
-            '\x2c\x2f\x60\x7e', $ret);
+        $this->assertEquals('"\x27*!@#$%^&*()_+}{:?><.,/`~', $ret);
     }
 
     public function test_hideWidget()
@@ -232,34 +231,9 @@ window.smartsupp||(function(d) {
         $this->chat->setGoogleAnalytics('UA-123456', array('cookieDomain' => '.foo.bar'));
         $this->chat->hideWidget();
 
-        $expected = "<script type=\"text/javascript\">
-            var _smartsupp = _smartsupp || {};
-            _smartsupp.key = 'XYZ123456';
-_smartsupp.cookieDomain = '\\x2efoo\\x2ebar';
-_smartsupp.sendEmailTanscript = false;
-_smartsupp.ratingEnabled = true;  // by default false
-_smartsupp.ratingType = 'advanced'; // by default 'simple'
-_smartsupp.ratingComment = true;  // default false
-_smartsupp.alignX = 'left'; // or 'left'
-_smartsupp.alignY = 'side';  // by default 'bottom'
-_smartsupp.widget = 'button'; // by default 'widget'
-_smartsupp.offsetX = 20;    // offset from left / right, default 10
-_smartsupp.offsetY = 120;    // offset from top, default 100
-_smartsupp.gaKey = 'UA\\x2d123456';
-_smartsupp.gaOptions = {'cookieDomain': '\\x2efoo\\x2ebar'};
-_smartsupp.hideWidget = true;
-window.smartsupp||(function(d) {
-                var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-                s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-                c.type='text/javascript';c.charset='utf-8';c.async=true;
-                c.src='//www.smartsuppchat.com/loader.js';s.parentNode.insertBefore(c,s);
-            })(document);smartsupp('email', 'johny\\x40depp\\x2ecom');
-smartsupp('name', 'Johny\\x20Depp');
-smartsupp('variables', {orderTotal: {label: 'Total\\x20orders', value: '150'}, lastOrder: {label: 'Last\\x20ordered', value: '2015\\x2d07\\x2d09'}});
-            </script>";
-
         $ret = $this->chat->render();
-        $this->assertEquals($expected, $ret);
+
+        $this->assertEquals(file_get_contents(dirname(__FILE__) . '/chat_code.txt'), $ret);
     }
 
 
