@@ -1,13 +1,11 @@
 [![Build Status](https://travis-ci.org/smartsupp/chat-code-generator.svg)](https://travis-ci.org/smartsupp/chat-code-generator)
 [![Coverage Status](https://coveralls.io/repos/smartsupp/chat-code-generator/badge.svg?branch=master&service=github)](https://coveralls.io/github/smartsupp/chat-code-generator?branch=master)
 
-smartsupp/chat-code-generator
-===============
+# Smartsupp chat code generator
 
-## Introduction
+This is simple PHP class for Smartsupp chat API which helps you to generate chat JavaScript code.
 
-This is simple PHP class for SmartSupp.com chat API which helps you to generate chat JavaScript code.
-
+* https://www.smartsupp.com/
 * [More info about Smartsupp CHAT API](https://developers.smartsupp.com/chat/configuration) This is "Get started" doc for chat API.
 * [More info about Smartsupp CHAT API - Overview](https://developers.smartsupp.com/chat/overview) This is full documentation for chat API. Note, that not all properties are possible to be set using this class.
 
@@ -29,3 +27,7 @@ Here is an example on how to use it:
   $chat->setGoogleAnalytics('UA-123456');
   $data = $chat->render();
 ```
+
+## Copyright
+
+Copyright (c) 2016 Smartsupp.com, s.r.o.
