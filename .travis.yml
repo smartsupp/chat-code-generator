@@ -11,7 +11,7 @@ matrix:
     - php: hhvm
 
 before_script:
-  - composer require satooshi/php-coveralls:dev-master squizlabs/php_codesniffer
+  - composer require satooshi/php-coveralls:1.0.1 squizlabs/php_codesniffer
   - composer install
 script:
   - vendor/bin/phpcs src/ -p --standard=PSR2 --report=summary
