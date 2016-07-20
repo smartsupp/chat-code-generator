@@ -305,7 +305,7 @@ class ChatGenerator
      * @param $ga_key Google analytics key.
      * @param array|null $ga_options Additional gaOptions.
      */
-    public function setGoogleAnalytics($ga_key, Array $ga_options = null)
+    public function setGoogleAnalytics($ga_key, array $ga_options = null)
     {
         $this->ga_key = $ga_key;
         $this->ga_options = $ga_options;
