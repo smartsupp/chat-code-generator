@@ -131,9 +131,24 @@ class ChatGenerator
      */
     protected $hide_widget = false;
 
+    /**
+     * @var null|string plugin platform
+     */
+    protected $platform = null;
+
     public function __construct($key = null)
     {
         $this->key = $key;
+    }
+
+    /**
+     * Set platform - serves as internal information for Smartsupp to identify which CMS and version is used.
+     *
+     * @param string $platform
+     */
+    public function setPlatform($platform)
+    {
+        $this->platform = $platform;
     }
 
     /**
@@ -385,6 +400,10 @@ class ChatGenerator
         if ($this->offset_x && $this->offset_y) {
             $params[] = "_smartsupp.offsetX = " . (int)$this->offset_x . ";    // offset from left / right, default 10";
             $params[] = "_smartsupp.offsetY = " . (int)$this->offset_y . ";    // offset from top, default 100";
+        }
+
+        if ($this->platform) {
+            $params[] = "_smartsupp.sitePlatform = " . self::javascriptEscape($this->platform) . ";";
         }
 
         // set detailed visitor's info
