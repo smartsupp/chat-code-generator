@@ -403,7 +403,7 @@ class ChatGenerator
         }
 
         if ($this->platform) {
-            $params[] = "_smartsupp.sitePlatform = " . self::javascriptEscape($this->platform) . ";";
+            $params[] = "_smartsupp.sitePlatform = '" . self::javascriptEscape($this->platform) . "';";
         }
 
         // set detailed visitor's info
