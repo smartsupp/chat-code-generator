@@ -11,6 +11,7 @@ _smartsupp.alignY = 'side';  // by default 'bottom'
 _smartsupp.widget = 'button'; // by default 'widget'
 _smartsupp.offsetX = 20;    // offset from left / right, default 10
 _smartsupp.offsetY = 120;    // offset from top, default 100
+_smartsupp.sitePlatform = 'Smartsupp CMS 5.1';
 _smartsupp.gaKey = 'UA-123456';
 _smartsupp.gaOptions = {'cookieDomain': '.foo.bar'};
 _smartsupp.hideWidget = true;

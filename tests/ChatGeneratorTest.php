@@ -229,6 +229,7 @@ window.smartsupp||(function(d) {
         $this->chat->setVariable('orderTotal', 'Total orders', 150);
         $this->chat->setVariable('lastOrder', 'Last ordered', '2015-07-09');
         $this->chat->setGoogleAnalytics('UA-123456', array('cookieDomain' => '.foo.bar'));
+        $this->chat->setPlatform('Smartsupp CMS 5.1');
         $this->chat->hideWidget();
 
         $ret = $this->chat->render();
