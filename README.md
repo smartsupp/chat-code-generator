@@ -28,6 +28,9 @@ Here is an example on how to use it:
   $data = $chat->render();
 ```
 
+## Get Started
+For backward compatibility with multiple plugins library supports PHP starting from version 5.3. It is highly possibly the constraint will change to 5.6+ in near future.  
+
 ## Copyright
 
-Copyright (c) 2016 Smartsupp.com, s.r.o.
+Copyright (c) since 2016 Smartsupp.com, s.r.o.
