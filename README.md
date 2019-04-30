@@ -28,7 +28,7 @@ Here is an example on how to use it:
   $data = $chat->render();
 ```
 
-## Get Started
+## Requirements
 For backward compatibility with multiple plugins library supports PHP starting from version 5.3. It is highly possibly the constraint will change to 5.6+ in near future.  
 
 ## Copyright
