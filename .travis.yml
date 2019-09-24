@@ -11,7 +11,11 @@ php:
 matrix:
   include:
     - php: 5.3
-      dist: precise
+      dist: trusty
+    - php: 5.4
+      dist: trusty
+    - php: 5.5
+      dist: trusty
 
 before_script:
   - composer require satooshi/php-coveralls:1.0.1 squizlabs/php_codesniffer
