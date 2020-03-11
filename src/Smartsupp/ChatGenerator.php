@@ -16,6 +16,11 @@ namespace Smartsupp;
 class ChatGenerator
 {
     /**
+     * @var string default number of miliseconds to delay async load
+     */
+    const DEFAULT_ASYNC_DELAY = 1500;
+
+    /**
      * @var array Values which are allowed for ratingType param.
      */
     protected $allowed_rating_types = array('advanced', 'simple');
@@ -39,6 +44,16 @@ class ChatGenerator
      * @var null|string Your unique chat code. Can be obtained after registration.
      */
     protected $key = null;
+
+    /**
+     * @var bool If chat code should load async via timer delay.
+     */
+    protected $loadAsync = false;
+
+    /**
+     * @var string Amount of miliseconds to delay async load of JS script.
+     */
+    protected $loadAsyncDelay = self::DEFAULT_ASYNC_DELAY;
 
     /**
      * @var null|string By default chat conversation is terminated when visitor opens a sub-domain on your website.
@@ -180,6 +195,26 @@ class ChatGenerator
     public function setKey($key)
     {
         $this->key = $key;
+    }
+
+    /**
+     * Allow to load code async after some delay
+     *
+     * @param bool $async should load async
+     */
+    public function setAsync($async = true)
+    {
+        $this->loadAsync = $async;
+    }
+
+    /**
+     * Allow to set delay of async load to override default value.
+     *
+     * @param int $delay delay in miliseconds
+     */
+    public function setAsyncDelay($delay)
+    {
+        $this->loadAsyncDelay = $delay;
     }
 
     /**
@@ -453,19 +488,32 @@ class ChatGenerator
             $params[] = "_smartsupp.hideWidget = true;";
         }
 
-        // create basic code and append params
-        $code = "<script type=\"text/javascript\">
-            var _smartsupp = _smartsupp || {};
-            _smartsupp.key = '%key%';\n" .
+        $codeChatCode = "_smartsupp.key = '%key%';\n" .
             implode("\n", $params) . "\n" .
             "window.smartsupp||(function(d) {
-                var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+        var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
                 s=d.getElementsByTagName('script')[0];c=d.createElement('script');
                 c.type='text/javascript';c.charset='utf-8';c.async=true;
                 c.src='//www.smartsuppchat.com/loader.js';s.parentNode.insertBefore(c,s);
             })(document);"
-            . implode("\n", $params2) . "
+            . implode("\n", $params2);
+
+        // create basic code and append params
+        if (!$this->loadAsync) {
+            $code = "<script type=\"text/javascript\">
+                var _smartsupp = _smartsupp || {};
+                $codeChatCode
+                </script>";
+        } else {
+            // create code to be load async
+            $code = "<script type=\"text/javascript\">
+            setTimeout(function() {
+                window._smartsupp = window._smartsupp || {};
+                var _smartsupp = window._smartsupp;
+                $codeChatCode
+            }, {$this->loadAsyncDelay});
             </script>";
+        }
 
         $code = str_replace('%key%', self::javascriptEscape($this->key), $code);
         $code = str_replace('%cookie_domain%', self::javascriptEscape($this->cookie_domain), $code);
