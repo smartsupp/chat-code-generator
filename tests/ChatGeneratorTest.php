@@ -192,19 +192,7 @@ class ChatGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->chat->setKey('XYZ123456');
         $ret = $this->chat->render();
 
-        $expected = "<script type=\"text/javascript\">
-            var _smartsupp = _smartsupp || {};
-            _smartsupp.key = 'XYZ123456';
-
-window.smartsupp||(function(d) {
-                var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-                s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-                c.type='text/javascript';c.charset='utf-8';c.async=true;
-                c.src='//www.smartsuppchat.com/loader.js';s.parentNode.insertBefore(c,s);
-            })(document);
-            </script>";
-
-        $this->assertEquals($expected, $ret);
+        $this->assertEquals(file_get_contents(dirname(__FILE__) . '/chat_code_simple.txt'), $ret);
     }
 
     public function test_render_simpleOutput()
@@ -214,6 +202,16 @@ window.smartsupp||(function(d) {
 
         $this->assertNull($ret);
         $this->expectOutputRegex('/.*window.smartsupp.*/');
+    }
+
+    public function test_render_async()
+    {
+        $this->chat->setKey('XYZ123456');
+        $this->chat->setAsync();
+        $this->chat->setAsyncDelay(2500);
+        $ret = $this->chat->render();
+
+        $this->assertEquals(file_get_contents(dirname(__FILE__) . '/chat_code_async.txt'), $ret);
     }
 
     public function test_render_allParams()
