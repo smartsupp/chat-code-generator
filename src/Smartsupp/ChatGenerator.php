@@ -377,6 +377,10 @@ class ChatGenerator
      */
     public function javascriptEscape($str)
     {
+        if (!$str) {
+            return '';
+        }
+        
         $new_str = '';
 
         for ($i = 0; $i < mb_strlen($str); $i++) {
